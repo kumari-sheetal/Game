@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import swal from "sweetalert";
+import Confetti from "react-confetti";
 import "./Num.css";
 
 const getRandomNumber = () => Math.floor(Math.random() * 100) + 1;
@@ -11,6 +12,7 @@ const Numbers = () => {
   const [message, setMessage] = useState("");
   const [score, setScore] = useState(null);
   const [showPlayAgain, setShowPlayAgain] = useState(false);
+  const [confettiActive, setConfettiActive] = useState(false);
 
   const handleGuess = () => {
     const guess = parseInt(userGuess);
@@ -41,6 +43,7 @@ const Numbers = () => {
       }).then((value) => {
         if (value === "ok") {
           setShowPlayAgain(true);
+          setConfettiActive(true);
         }
       });
     } else if (guess < randomNumber) {
@@ -59,6 +62,7 @@ const Numbers = () => {
     setMessage("");
     setScore(null);
     setShowPlayAgain(false);
+    setConfettiActive(false);
   };
 
   return (
@@ -93,6 +97,7 @@ const Numbers = () => {
           </p>
           {score !== null && <p id="score">Your score is {score}.</p>}
           {score !== null && <p className="celebration-emoji">🎉</p>}
+          {confettiActive && <Confetti />}
         </div>
       </div>
     </div>
